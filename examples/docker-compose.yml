@@ -1,0 +1,47 @@
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - knetworks
+    ports:
+      - 22181:2181
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    networks:
+      - knetworks
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+#  keycloak:
+#    image: kafka_provider_keycloak:13.0.0
+#    depends_on:
+#      - kafka
+#    ports:
+#      - 127.0.0.1:8080:8080
+#    networks:
+#      - knetworks
+#    environment:
+#      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+#      KAFKA_ACKS: '1'
+#      KEYCLOAK_SYNC: 'false'
+#      KEYCLOAK_KAFKA_TOPIC_ADMIN: keycloak-admin
+#      KEYCLOAK_KAFKA_TOPIC_LOGIN: keycloak-login
+#      KEYCLOAK_USER: keycloak
+#      KEYCLOAK_PASSWORD: keycloak
+
+networks:
+  knetworks:
