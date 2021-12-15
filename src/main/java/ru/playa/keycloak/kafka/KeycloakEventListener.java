@@ -44,9 +44,9 @@ public class KeycloakEventListener implements EventListenerProvider {
     public void onEvent(Event event) {
         LOGGER.infof("Send event %s", event.toString());
         publish(
-            configuration.getLoginEventTopic(),
-            getKafkaEventProducer(),
-            KeycloakEvent.of(event)
+                configuration.getLoginEventTopic(),
+                getKafkaEventProducer(),
+                KeycloakEvent.of(event)
         );
     }
 
@@ -54,9 +54,9 @@ public class KeycloakEventListener implements EventListenerProvider {
     public void onEvent(AdminEvent adminEvent, boolean includeRepresentation) {
         LOGGER.infof("Send event %s", adminEvent.toString());
         publish(
-            configuration.getAdminEventTopic(),
-            getKafkaEventProducer(),
-            KeycloakAdminEvent.of(adminEvent)
+                configuration.getAdminEventTopic(),
+                getKafkaEventProducer(),
+                KeycloakAdminEvent.of(adminEvent)
         );
     }
 
@@ -111,8 +111,13 @@ public class KeycloakEventListener implements EventListenerProvider {
     private KafkaProducer<String, byte[]> getKafkaEventProducer() {
         if (eventProducer == null) {
             synchronized (this) {
+                // Workaround for SCRAM auth issue
+                // javax.security.auth.login.LoginException:
+                // No LoginModule found for org.apache.kafka.common.security.scram.ScramLoginModule
+                Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+
                 eventProducer = new KafkaProducer<>(
-                    configuration.getKafkaConfiguration(), new StringSerializer(), new ByteArraySerializer()
+                        configuration.getKafkaConfiguration(), new StringSerializer(), new ByteArraySerializer()
                 );
             }
         }

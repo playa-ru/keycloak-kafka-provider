@@ -283,7 +283,8 @@ public final class Configuration {
                 kafka.setProperty(newName, properties.getProperty(name));
             });
 
-        LOGGER.infof("Loading Kafka configuration %s", kafka);
+        // [sasl.jaas.config] may contain sensitive info, so we shouldn't print it to INFO channel
+        LOGGER.debugf("Loading Kafka configuration %s", kafka);
 
         return kafka;
     }
