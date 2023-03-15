@@ -16,7 +16,7 @@
     <name>Keycloak event listener for Kafka</name>
     <description>Sends Keycloak events to Kafka</description>
 
-    <url>https://gl.playa.ru/playa-public/keycloak-kafka-provider</url>
+    <url>https://github.com/playa-ru/keycloak-kafka-provider</url>
 
     <developers>
         <developer>
@@ -69,8 +69,8 @@
     </properties>
 
     <scm>
-        <url>scm:git:git@gl.playa.ru:playa-public/keycloak-kafka-provider.git</url>
-        <developerConnection>scm:git:git@gl.playa.ru:playa-public/keycloak-kafka-provider.git</developerConnection>
+        <url>scm:git:git@github.com:playa-ru/keycloak-kafka-provider.git</url>
+        <developerConnection>scm:git:git@github.com:playa-ru/keycloak-kafka-provider.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
