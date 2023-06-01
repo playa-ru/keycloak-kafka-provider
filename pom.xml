@@ -63,9 +63,8 @@
         <version.checkstyle.plugin>3.0.0</version.checkstyle.plugin>
         <version.surefire.plugin>2.22.0</version.surefire.plugin>
 
-        <keycloak.version>21.0.1</keycloak.version>
-        <kafka.version>2.6.0</kafka.version>
-
+        <version.keycloak>21.1.1</version.keycloak>
+        <version.kafka>2.6.0</version.kafka>
     </properties>
 
     <scm>
@@ -79,28 +78,28 @@
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
+            <version>${version.kafka}</version>
         </dependency>
 
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi</artifactId>
             <scope>provided</scope>
-            <version>${keycloak.version}</version>
+            <version>${version.keycloak}</version>
         </dependency>
 
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi-private</artifactId>
             <scope>provided</scope>
-            <version>${keycloak.version}</version>
+            <version>${version.keycloak}</version>
         </dependency>
 
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-services</artifactId>
             <scope>provided</scope>
-            <version>${keycloak.version}</version>
+            <version>${version.keycloak}</version>
         </dependency>
 
         <dependency>
@@ -246,4 +245,35 @@
         </repository>
     </distributionManagement>
 
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>dockerfile-maven-plugin</artifactId>
+                        <version>1.4.13</version>
+                        <configuration>
+                            <repository>playaru/${artifactId}</repository>
+                            <tag>${version.keycloak}</tag>
+                            <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                            <buildArgs>
+                                <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                            </buildArgs>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>default</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

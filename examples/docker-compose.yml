@@ -26,22 +26,22 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-#  keycloak:
-#    image: kafka_provider_keycloak:13.0.0
-#    depends_on:
-#      - kafka
-#    ports:
-#      - 127.0.0.1:8080:8080
-#    networks:
-#      - knetworks
-#    environment:
-#      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-#      KAFKA_ACKS: '1'
-#      KEYCLOAK_SYNC: 'false'
-#      KEYCLOAK_KAFKA_TOPIC_ADMIN: keycloak-admin
-#      KEYCLOAK_KAFKA_TOPIC_LOGIN: keycloak-login
-#      KEYCLOAK_USER: keycloak
-#      KEYCLOAK_PASSWORD: keycloak
+  keycloak:
+    image: playaru/keycloak-russian:21.1.1
+    depends_on:
+      - kafka
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - knetworks
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_ACKS: '1'
+      KEYCLOAK_SYNC: 'false'
+      KEYCLOAK_KAFKA_TOPIC_ADMIN: keycloak-admin
+      KEYCLOAK_KAFKA_TOPIC_LOGIN: keycloak-login
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
 
 networks:
   knetworks:
