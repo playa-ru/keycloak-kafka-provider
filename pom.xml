@@ -64,7 +64,7 @@
         <version.surefire.plugin>2.22.0</version.surefire.plugin>
 
         <version.keycloak>22.0.3</version.keycloak>
-        <version.kafka>2.6.0</version.kafka>
+        <version.kafka>2.6.3</version.kafka>
     </properties>
 
     <scm>
