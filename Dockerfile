@@ -4,7 +4,7 @@ ARG JAR_FILE
 
 ARG TMP_DIST=/tmp/keycloak
 
-ENV KEYCLOAK_VERSION 21.1.1
+ENV KEYCLOAK_VERSION 24.0.1
 
 ENV MAVEN_CENTRAL_URL https://repo1.maven.org/maven2
 
