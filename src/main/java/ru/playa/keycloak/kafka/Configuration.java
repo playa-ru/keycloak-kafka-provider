@@ -220,7 +220,6 @@ public final class Configuration {
      * @return Default configuration.
      */
     private Properties loadConfiguration() {
-
         Properties properties = new Properties();
 
         String filename = getenv(
@@ -236,6 +235,10 @@ public final class Configuration {
             }
         }
 
+        ifAbsentThenSet(properties, KAFKA_BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        ifAbsentThenSet(properties, KAFKA_ACKS, "1");
+        ifAbsentThenSet(properties, KAFKA_MAX_BLOCK_MS, "2000");
+
         for (Object o : properties.keySet()) {
             String key = (String) o;
             String envVariableName = key.replaceAll("[^a-zA-Z0-9]", "_").toUpperCase();
@@ -250,10 +253,6 @@ public final class Configuration {
                 properties.setProperty(key, property);
             }
         }
-
-        ifAbsentThenSet(properties, KAFKA_BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        ifAbsentThenSet(properties, KAFKA_ACKS, "1");
-        ifAbsentThenSet(properties, KAFKA_MAX_BLOCK_MS, "2000");
 
         LOGGER.infof("Final configuration: %s", properties);
 
