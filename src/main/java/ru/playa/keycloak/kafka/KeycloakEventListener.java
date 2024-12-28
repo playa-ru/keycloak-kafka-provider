@@ -42,6 +42,10 @@ public class KeycloakEventListener implements EventListenerProvider {
 
     @Override
     public void onEvent(Event event) {
+        if (configuration.isDryRun()) {
+            return;
+        }
+
         LOGGER.infof("Send event %s", event.toString());
         publish(
             configuration.getLoginEventTopic(),
@@ -52,6 +56,10 @@ public class KeycloakEventListener implements EventListenerProvider {
 
     @Override
     public void onEvent(AdminEvent adminEvent, boolean includeRepresentation) {
+        if (configuration.isDryRun()) {
+            return;
+        }
+
         LOGGER.infof("Send event %s", adminEvent.toString());
         publish(
             configuration.getAdminEventTopic(),

@@ -45,6 +45,11 @@ public final class Configuration {
     private static final String KEYCLOAK_KAFKA_SYNC_MODE = KEYCLOAK_PREFIX + KAFKA_PREFIX + "sync";
 
     /**
+     * Dry run.
+     */
+    private static final String KEYCLOAK_KAFKA_DRY_RUN = KEYCLOAK_PREFIX + KAFKA_PREFIX + "dryrun";
+
+    /**
      * Throw runtime exception on send error.
      */
     private static final String KEYCLOAK_KAFKA_THROW_EX_ON_ERROR =
@@ -96,6 +101,11 @@ public final class Configuration {
     private final String eventTopic;
 
     /**
+     * Dry run.
+     */
+    private final boolean dryRun;
+
+    /**
      * Send messages synchronously.
      */
     private final boolean sync;
@@ -115,6 +125,7 @@ public final class Configuration {
         adminTopic = configuration.getProperty(KEYCLOAK_KAFKA_ADMIN_EVENT_TOPIC, "keycloak-admin-events");
         eventTopic = configuration.getProperty(KEYCLOAK_KAFKA_EVENT_TOPIC, "keycloak-login-events");
         sync = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_SYNC_MODE, "false"));
+        dryRun = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_DRY_RUN, "true"));
         throwExceptionOnError = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_THROW_EX_ON_ERROR, "false"));
     }
 
@@ -161,6 +172,15 @@ public final class Configuration {
      */
     public boolean isThrowExceptionOnError() {
         return throwExceptionOnError;
+    }
+
+    /**
+     * Is dru run.
+     *
+     * @return Dry run.
+     */
+    public boolean isDryRun() {
+        return dryRun;
     }
 
     /**
