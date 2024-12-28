@@ -125,7 +125,7 @@ public final class Configuration {
         adminTopic = configuration.getProperty(KEYCLOAK_KAFKA_ADMIN_EVENT_TOPIC, "keycloak-admin-events");
         eventTopic = configuration.getProperty(KEYCLOAK_KAFKA_EVENT_TOPIC, "keycloak-login-events");
         sync = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_SYNC_MODE, "false"));
-        dryRun = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_DRY_RUN, "true"));
+        dryRun = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_DRY_RUN, "false"));
         throwExceptionOnError = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_THROW_EX_ON_ERROR, "false"));
     }
 
