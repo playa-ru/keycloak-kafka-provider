@@ -43,10 +43,12 @@ public class KeycloakEventListener implements EventListenerProvider {
     @Override
     public void onEvent(Event event) {
         if (configuration.isDryRun()) {
+            LOGGER.debugf("Dry run to send event %s", KeycloakEvent.of(event));
+
             return;
         }
 
-        LOGGER.infof("Send event %s", event.toString());
+        LOGGER.debugf("Send event %s", KeycloakEvent.of(event));
         publish(
             configuration.getLoginEventTopic(),
             getKafkaEventProducer(),
@@ -57,10 +59,12 @@ public class KeycloakEventListener implements EventListenerProvider {
     @Override
     public void onEvent(AdminEvent adminEvent, boolean includeRepresentation) {
         if (configuration.isDryRun()) {
+            LOGGER.debugf("Dry run to send admin event %s", KeycloakAdminEvent.of(adminEvent));
+
             return;
         }
 
-        LOGGER.infof("Send event %s", adminEvent.toString());
+        LOGGER.debugf("Send admin event %s", KeycloakAdminEvent.of(adminEvent));
         publish(
             configuration.getAdminEventTopic(),
             getKafkaEventProducer(),
@@ -119,6 +123,8 @@ public class KeycloakEventListener implements EventListenerProvider {
     private KafkaProducer<String, byte[]> getKafkaEventProducer() {
         if (eventProducer == null) {
             synchronized (this) {
+                LOGGER.debugf("Create kafka event producer for properties %s", configuration.getKafkaConfiguration());
+
                 eventProducer = new KafkaProducer<>(
                     configuration.getKafkaConfiguration(), new StringSerializer(), new ByteArraySerializer()
                 );

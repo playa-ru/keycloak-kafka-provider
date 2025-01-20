@@ -125,7 +125,7 @@ public final class Configuration {
         adminTopic = configuration.getProperty(KEYCLOAK_KAFKA_ADMIN_EVENT_TOPIC, "keycloak-admin-events");
         eventTopic = configuration.getProperty(KEYCLOAK_KAFKA_EVENT_TOPIC, "keycloak-login-events");
         sync = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_SYNC_MODE, "false"));
-        dryRun = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_DRY_RUN, "false"));
+        dryRun = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_DRY_RUN, "true"));
         throwExceptionOnError = isTrue(configuration.getProperty(KEYCLOAK_KAFKA_THROW_EX_ON_ERROR, "false"));
     }
 
@@ -274,7 +274,7 @@ public final class Configuration {
             }
         }
 
-        LOGGER.infof("Final configuration: %s", properties);
+        LOGGER.infof("Kafka final configuration: %s", properties);
 
         return properties;
     }
@@ -302,7 +302,7 @@ public final class Configuration {
                 kafka.setProperty(newName, properties.getProperty(name));
             });
 
-        LOGGER.infof("Loading Kafka configuration %s", kafka);
+        LOGGER.debugf("Loading Kafka configuration %s", kafka);
 
         return kafka;
     }
